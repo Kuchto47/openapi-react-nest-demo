@@ -7,6 +7,7 @@ import {
   Put,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -18,6 +19,7 @@ import { UpdateCatDto } from './dto/update-cat.dto';
 
 @ApiTags('cats')
 @Controller('cats')
+@ApiBearerAuth()
 export class CatsController {
   @Get()
   @ApiOperation({ summary: 'Get all cats' })
