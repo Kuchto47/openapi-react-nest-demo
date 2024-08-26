@@ -4,20 +4,22 @@ import {
   Body,
   Controller,
   Get,
-  Post,
-} from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+  Post, Put
+} from "@nestjs/common";
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatDto } from './dto/cat.dto';
 import { CatBreed } from './domain/cat-breed.enum';
+import { UpdateCatDto } from "./dto/update-cat.dto";
 
 @ApiTags('cats')
 @Controller('cats')
+@ApiBearerAuth()
 export class CatsController {
   @Get()
   @ApiOperation({ summary: 'Get all cats' })
   @ApiResponse({ status: 200, description: 'Return all cats.', type: [CatDto] })
-  getAll(): CatDto[] {
+  getAllCats(): CatDto[] {
     const cat1: CatDto = new CatDto();
     cat1.name = 'Whiskers';
     cat1.age = 3;
@@ -39,7 +41,7 @@ export class CatsController {
     type: CatDto,
   })
   @ApiResponse({ status: 400, description: 'Bad Request. Invalid input data.' })
-  create(@Body() createCatDto: CreateCatDto): CatDto {
+  createCat(@Body() createCatDto: CreateCatDto): CatDto {
     const createdCat = new CatDto();
 
     //simulation of validation - not in scope
@@ -54,5 +56,23 @@ export class CatsController {
     createdCat.breed = createCatDto.breed;
 
     return createdCat;
+  }
+
+  @Put()
+  @ApiOperation({ summary: 'Update a cat' })
+  @ApiResponse({
+    status: 200,
+    description: 'The cat has been successfully updated.',
+    type: CatDto,
+  })
+  @ApiResponse({ status: 400, description: 'Bad Request. Invalid input data.' })
+  updateCat(@Body() updateCatDto: UpdateCatDto): CatDto {
+    const updatedCat = new CatDto();
+
+    updatedCat.name = updateCatDto.name;
+    updatedCat.age = updateCatDto.age;
+    updatedCat.breed = updateCatDto.breed;
+
+    return updatedCat;
   }
 }

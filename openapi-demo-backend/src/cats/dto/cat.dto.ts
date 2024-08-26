@@ -20,6 +20,7 @@ export class CatDto {
   @ApiProperty({
     description: 'The breed of the cat',
     enum: CatBreed,
+    enumName: 'CatBreed',
     example: CatBreed.SIAMESE,
   })
   breed: CatBreed;
