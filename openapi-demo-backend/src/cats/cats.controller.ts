@@ -28,6 +28,10 @@ export class CatsController {
         description: 'Return all cats.',
         type: [CatDto],
     })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
     getAllCats(): CatDto[] {
         const cat1: CatDto = new CatDto();
         cat1.name = 'Whiskers';
@@ -52,6 +56,10 @@ export class CatsController {
     @ApiResponse({
         status: 400,
         description: 'Bad Request. Invalid input data.',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
     })
     createCat(@Body() createCatDto: CreateCatDto): CatDto {
         const createdCat = new CatDto();
@@ -80,6 +88,10 @@ export class CatsController {
     @ApiResponse({
         status: 400,
         description: 'Bad Request. Invalid input data.',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
     })
     updateCat(@Body() updateCatDto: UpdateCatDto): CatDto {
         const updatedCat = new CatDto();
