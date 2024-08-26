@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CatBreed } from './CatBreed';
 import {
     CatBreedFromJSON,
@@ -46,16 +46,16 @@ export interface CatDto {
     breed: CatBreed;
 }
 
+
+
 /**
  * Check if a given object implements the CatDto interface.
  */
-export function instanceOfCatDto(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "age" in value;
-    isInstance = isInstance && "breed" in value;
-
-    return isInstance;
+export function instanceOfCatDto(value: object): value is CatDto {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('age' in value) || value['age'] === undefined) return false;
+    if (!('breed' in value) || value['breed'] === undefined) return false;
+    return true;
 }
 
 export function CatDtoFromJSON(json: any): CatDto {
@@ -63,7 +63,7 @@ export function CatDtoFromJSON(json: any): CatDto {
 }
 
 export function CatDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): CatDto {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -75,17 +75,14 @@ export function CatDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ca
 }
 
 export function CatDtoToJSON(value?: CatDto | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'name': value.name,
-        'age': value.age,
-        'breed': CatBreedToJSON(value.breed),
+        'name': value['name'],
+        'age': value['age'],
+        'breed': CatBreedToJSON(value['breed']),
     };
 }
 

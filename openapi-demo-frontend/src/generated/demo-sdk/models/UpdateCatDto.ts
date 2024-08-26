@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CatBreed } from './CatBreed';
 import {
     CatBreedFromJSON,
@@ -46,13 +46,13 @@ export interface UpdateCatDto {
     breed?: CatBreed;
 }
 
+
+
 /**
  * Check if a given object implements the UpdateCatDto interface.
  */
-export function instanceOfUpdateCatDto(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfUpdateCatDto(value: object): value is UpdateCatDto {
+    return true;
 }
 
 export function UpdateCatDtoFromJSON(json: any): UpdateCatDto {
@@ -60,29 +60,26 @@ export function UpdateCatDtoFromJSON(json: any): UpdateCatDto {
 }
 
 export function UpdateCatDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateCatDto {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'age': !exists(json, 'age') ? undefined : json['age'],
-        'breed': !exists(json, 'breed') ? undefined : CatBreedFromJSON(json['breed']),
+        'name': json['name'] == null ? undefined : json['name'],
+        'age': json['age'] == null ? undefined : json['age'],
+        'breed': json['breed'] == null ? undefined : CatBreedFromJSON(json['breed']),
     };
 }
 
 export function UpdateCatDtoToJSON(value?: UpdateCatDto | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+    if (value == null) {
+        return value;
     }
     return {
         
-        'name': value.name,
-        'age': value.age,
-        'breed': CatBreedToJSON(value.breed),
+        'name': value['name'],
+        'age': value['age'],
+        'breed': CatBreedToJSON(value['breed']),
     };
 }
 

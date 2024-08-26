@@ -18,7 +18,7 @@ import type {
   CatDto,
   CreateCatDto,
   UpdateCatDto,
-} from '../models';
+} from '../models/index';
 import {
     CatDtoFromJSON,
     CatDtoToJSON,
@@ -26,7 +26,7 @@ import {
     CreateCatDtoToJSON,
     UpdateCatDtoFromJSON,
     UpdateCatDtoToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface CreateCatRequest {
     createCatDto: CreateCatDto;
@@ -45,8 +45,11 @@ export class CatsApi extends runtime.BaseAPI {
      * Create a cat
      */
     async createCatRaw(requestParameters: CreateCatRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatDto>> {
-        if (requestParameters.createCatDto === null || requestParameters.createCatDto === undefined) {
-            throw new runtime.RequiredError('createCatDto','Required parameter requestParameters.createCatDto was null or undefined when calling createCat.');
+        if (requestParameters['createCatDto'] == null) {
+            throw new runtime.RequiredError(
+                'createCatDto',
+                'Required parameter "createCatDto" was null or undefined when calling createCat().'
+            );
         }
 
         const queryParameters: any = {};
@@ -68,7 +71,7 @@ export class CatsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateCatDtoToJSON(requestParameters.createCatDto),
+            body: CreateCatDtoToJSON(requestParameters['createCatDto']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CatDtoFromJSON(jsonValue));
@@ -120,8 +123,11 @@ export class CatsApi extends runtime.BaseAPI {
      * Update a cat
      */
     async updateCatRaw(requestParameters: UpdateCatRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatDto>> {
-        if (requestParameters.updateCatDto === null || requestParameters.updateCatDto === undefined) {
-            throw new runtime.RequiredError('updateCatDto','Required parameter requestParameters.updateCatDto was null or undefined when calling updateCat.');
+        if (requestParameters['updateCatDto'] == null) {
+            throw new runtime.RequiredError(
+                'updateCatDto',
+                'Required parameter "updateCatDto" was null or undefined when calling updateCat().'
+            );
         }
 
         const queryParameters: any = {};
@@ -143,7 +149,7 @@ export class CatsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: UpdateCatDtoToJSON(requestParameters.updateCatDto),
+            body: UpdateCatDtoToJSON(requestParameters['updateCatDto']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CatDtoFromJSON(jsonValue));

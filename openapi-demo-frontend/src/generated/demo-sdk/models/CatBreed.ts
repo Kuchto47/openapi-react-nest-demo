@@ -25,6 +25,17 @@ export const CatBreed = {
 export type CatBreed = typeof CatBreed[keyof typeof CatBreed];
 
 
+export function instanceOfCatBreed(value: any): boolean {
+    for (const key in CatBreed) {
+        if (Object.prototype.hasOwnProperty.call(CatBreed, key)) {
+            if (CatBreed[key as keyof typeof CatBreed] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CatBreedFromJSON(json: any): CatBreed {
     return CatBreedFromJSONTyped(json, false);
 }
