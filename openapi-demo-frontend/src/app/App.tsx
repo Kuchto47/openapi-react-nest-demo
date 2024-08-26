@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import './App.css'
 import {Cat} from "./cats/models/Cat.ts";
 import catsService from "./cats/services/catsService.ts";
@@ -38,10 +38,10 @@ function App() {
   return (
       <>
           {cats.map((cat, index) => (
-              <>
-                  <span key={index}>Cat {index + 1}: Name: {cat.name}; Age: {cat.age}; Breed: {cat.breed}</span>
+              <Fragment key={index}>
+                  <span>Cat {index + 1}: Name: {cat.name}; Age: {cat.age}; Breed: {cat.breed}</span>
                   <br />
-              </>
+              </Fragment>
           ))}
           <button onClick={createValidCat}>Create "valid" cat</button>
           <button onClick={createInvalidCat}>Create "invalid" cat</button>
