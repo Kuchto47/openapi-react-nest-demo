@@ -11,13 +11,12 @@ async function bootstrap() {
     .setDescription('description')
     .setVersion('1.0')
     .addTag('openApiExample')
-    .addBearerAuth()
     .build();
 
-  const document = SwaggerModule
-    .createDocument(app, config, {
-      operationIdFactory: (_controllerKey: string, methodKey: string) => methodKey,
-    });
+  const document = SwaggerModule.createDocument(app, config, {
+    operationIdFactory: (_controllerKey: string, methodKey: string) =>
+      methodKey,
+  });
   SwaggerModule.setup('api', app, document);
 
   app.use('/api-yaml', (_, res) => {
