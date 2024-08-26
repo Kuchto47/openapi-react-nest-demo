@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { CatBreed } from './CatBreed';
+import {
+    CatBreedFromJSON,
+    CatBreedFromJSONTyped,
+    CatBreedToJSON,
+} from './CatBreed';
+
 /**
  * 
  * @export
@@ -32,24 +39,12 @@ export interface CatDto {
      */
     age: number;
     /**
-     * The breed of the cat
-     * @type {string}
+     * 
+     * @type {CatBreed}
      * @memberof CatDto
      */
-    breed: CatDtoBreedEnum;
+    breed: CatBreed;
 }
-
-
-/**
- * @export
- */
-export const CatDtoBreedEnum = {
-    Siamese: 'Siamese',
-    Bengal: 'Bengal',
-    Persian: 'Persian'
-} as const;
-export type CatDtoBreedEnum = typeof CatDtoBreedEnum[keyof typeof CatDtoBreedEnum];
-
 
 /**
  * Check if a given object implements the CatDto interface.
@@ -75,7 +70,7 @@ export function CatDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ca
         
         'name': json['name'],
         'age': json['age'],
-        'breed': json['breed'],
+        'breed': CatBreedFromJSON(json['breed']),
     };
 }
 
@@ -90,7 +85,7 @@ export function CatDtoToJSON(value?: CatDto | null): any {
         
         'name': value.name,
         'age': value.age,
-        'breed': value.breed,
+        'breed': CatBreedToJSON(value.breed),
     };
 }
 

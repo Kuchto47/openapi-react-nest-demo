@@ -22,7 +22,7 @@ export class DefaultApi extends runtime.BaseAPI {
 
     /**
      */
-    async appControllerGetHelloRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getHelloRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -39,8 +39,8 @@ export class DefaultApi extends runtime.BaseAPI {
 
     /**
      */
-    async appControllerGetHello(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.appControllerGetHelloRaw(initOverrides);
+    async getHello(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getHelloRaw(initOverrides);
     }
 
 }

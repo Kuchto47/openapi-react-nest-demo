@@ -12,7 +12,7 @@ export class CatsService {
             breed: cat.breed
         };
 
-        const createdCatDto = await this.catsApi.catsControllerCreate({ createCatDto });
+        const createdCatDto = await this.catsApi.createCat({ createCatDto });
         return {
             name: createdCatDto.name,
             age: createdCatDto.age,
@@ -21,7 +21,7 @@ export class CatsService {
     }
 
     async getAllCats(): Promise<Cat[]> {
-        const cats = await this.catsApi.catsControllerGetAll();
+        const cats = await this.catsApi.getAllCats();
 
         return cats.map((cat: CatDto): Cat => ({
             name: cat.name,

@@ -17,16 +17,23 @@ import * as runtime from '../runtime';
 import type {
   CatDto,
   CreateCatDto,
+  UpdateCatDto,
 } from '../models';
 import {
     CatDtoFromJSON,
     CatDtoToJSON,
     CreateCatDtoFromJSON,
     CreateCatDtoToJSON,
+    UpdateCatDtoFromJSON,
+    UpdateCatDtoToJSON,
 } from '../models';
 
-export interface CatsControllerCreateRequest {
+export interface CreateCatRequest {
     createCatDto: CreateCatDto;
+}
+
+export interface UpdateCatRequest {
+    updateCatDto: UpdateCatDto;
 }
 
 /**
@@ -37,9 +44,9 @@ export class CatsApi extends runtime.BaseAPI {
     /**
      * Create a cat
      */
-    async catsControllerCreateRaw(requestParameters: CatsControllerCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatDto>> {
+    async createCatRaw(requestParameters: CreateCatRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatDto>> {
         if (requestParameters.createCatDto === null || requestParameters.createCatDto === undefined) {
-            throw new runtime.RequiredError('createCatDto','Required parameter requestParameters.createCatDto was null or undefined when calling catsControllerCreate.');
+            throw new runtime.RequiredError('createCatDto','Required parameter requestParameters.createCatDto was null or undefined when calling createCat.');
         }
 
         const queryParameters: any = {};
@@ -48,6 +55,14 @@ export class CatsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
         const response = await this.request({
             path: `/cats`,
             method: 'POST',
@@ -62,19 +77,27 @@ export class CatsApi extends runtime.BaseAPI {
     /**
      * Create a cat
      */
-    async catsControllerCreate(requestParameters: CatsControllerCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatDto> {
-        const response = await this.catsControllerCreateRaw(requestParameters, initOverrides);
+    async createCat(requestParameters: CreateCatRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatDto> {
+        const response = await this.createCatRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get all cats
      */
-    async catsControllerGetAllRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CatDto>>> {
+    async getAllCatsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CatDto>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
         const response = await this.request({
             path: `/cats`,
             method: 'GET',
@@ -88,8 +111,49 @@ export class CatsApi extends runtime.BaseAPI {
     /**
      * Get all cats
      */
-    async catsControllerGetAll(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CatDto>> {
-        const response = await this.catsControllerGetAllRaw(initOverrides);
+    async getAllCats(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CatDto>> {
+        const response = await this.getAllCatsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update a cat
+     */
+    async updateCatRaw(requestParameters: UpdateCatRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CatDto>> {
+        if (requestParameters.updateCatDto === null || requestParameters.updateCatDto === undefined) {
+            throw new runtime.RequiredError('updateCatDto','Required parameter requestParameters.updateCatDto was null or undefined when calling updateCat.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/cats`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateCatDtoToJSON(requestParameters.updateCatDto),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CatDtoFromJSON(jsonValue));
+    }
+
+    /**
+     * Update a cat
+     */
+    async updateCat(requestParameters: UpdateCatRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CatDto> {
+        const response = await this.updateCatRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

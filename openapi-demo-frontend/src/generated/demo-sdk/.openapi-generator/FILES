@@ -3,7 +3,9 @@ apis/CatsApi.ts
 apis/DefaultApi.ts
 apis/index.ts
 index.ts
+models/CatBreed.ts
 models/CatDto.ts
 models/CreateCatDto.ts
+models/UpdateCatDto.ts
 models/index.ts
 runtime.ts
