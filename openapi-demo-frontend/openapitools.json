@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 4,
+  "generator-cli": {
+    "version": "6.6.0",
+    "generators": {
+      "typescript": {
+        "generatorName": "typescript-fetch",
+        "output": "#{cwd}/src/generated/demo-sdk",
+        "inputSpec": "http://localhost:5555/api-yaml",
+        "additionalProperties": {
+          "supportsES6": "true"
+        }
+      }
+    }
+  }
+}

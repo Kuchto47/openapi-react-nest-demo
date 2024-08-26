@@ -1,0 +1,9 @@
+.openapi-generator-ignore
+apis/CatsApi.ts
+apis/DefaultApi.ts
+apis/index.ts
+index.ts
+models/CatDto.ts
+models/CreateCatDto.ts
+models/index.ts
+runtime.ts
