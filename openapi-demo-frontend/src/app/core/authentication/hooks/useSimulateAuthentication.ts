@@ -4,6 +4,6 @@ import { notifyAuthenticationListeners } from '../services/authenticationListene
 export const useSimulateAuthentication = () => {
     useEffect(() => {
         // Shall be called eg. in AuthProvider when user is signed in, to notify all listeners about the new token
-        notifyAuthenticationListeners('EXAMPLE DEMO TOKEN')
+        notifyAuthenticationListeners('EXAMPLE_DEMO_TOKEN')
     }, []);
 }
