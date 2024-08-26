@@ -2,9 +2,12 @@ import {useCallback, useEffect, useState} from 'react'
 import './App.css'
 import {Cat} from "./cats/models/Cat.ts";
 import catsService from "./cats/services/catsService.ts";
+import {useSimulateAuthentication} from "./core/authentication/hooks/useSimulateAuthentication.ts";
 
 function App() {
   const [cats, setCats] = useState<Cat[]>([]);
+
+  useSimulateAuthentication();
 
   const createCat: (cat: Cat) => Promise<void> = useCallback(async (cat) => {
       try {
@@ -24,13 +27,13 @@ function App() {
       createCat({name: 'Bad Garfield', age: -2, breed: 'Persian'})
   }, [createCat]);
 
-    useEffect(() => {
-        const fetchAllCatsInitially = async () => {
-            const cats = await catsService.getAllCats();
-            setCats(cats);
-        }
-        fetchAllCatsInitially();
-    }, []);
+  useEffect(() => {
+      const fetchAllCatsInitially = async () => {
+          const cats = await catsService.getAllCats();
+          setCats(cats);
+      }
+      fetchAllCatsInitially();
+  }, []);
 
   return (
       <>
