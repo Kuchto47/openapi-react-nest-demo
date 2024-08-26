@@ -1,16 +1,21 @@
-// cats.controller.ts
 import {
   BadRequestException,
   Body,
   Controller,
   Get,
-  Post, Put
-} from "@nestjs/common";
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+  Post,
+  Put,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatDto } from './dto/cat.dto';
 import { CatBreed } from './domain/cat-breed.enum';
-import { UpdateCatDto } from "./dto/update-cat.dto";
+import { UpdateCatDto } from './dto/update-cat.dto';
 
 @ApiTags('cats')
 @Controller('cats')
